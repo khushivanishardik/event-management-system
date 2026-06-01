@@ -1,8 +1,6 @@
-// Location: frontend/src/types/auth.types.ts
-// Purpose: TypeScript interfaces for authentication data structures.
-//          Shared across auth store, services, and components.
+// FILE: src/types/auth.types.ts
 
-export type Role = 'user' | 'organizer' | 'admin';
+export type Role = "user" | "organizer" | "admin";
 
 export interface User {
   _id: string;
@@ -13,13 +11,6 @@ export interface User {
   phone: string;
   isActive: boolean;
   createdAt: string;
-}
-
-export interface AuthState {
-  user: User | null;
-  token: string | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
 }
 
 export interface LoginPayload {

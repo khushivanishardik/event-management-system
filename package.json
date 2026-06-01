@@ -1,7 +1,13 @@
 {
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
     "@nestjs/config": "^4.0.4",
-    "reflect-metadata": "^0.2.2"
+    "date-fns": "^4.3.0",
+    "lucide-react": "^1.17.0",
+    "react-hook-form": "^7.76.1",
+    "react-hot-toast": "^2.6.0",
+    "reflect-metadata": "^0.2.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

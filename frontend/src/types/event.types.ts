@@ -1,18 +1,16 @@
-// Location: frontend/src/types/event.types.ts
-// Purpose: TypeScript interfaces for Event, Ticket, and Payment data.
-//          Used across event pages, stores, and service calls.
+// FILE: src/types/event.types.ts
 
-import { User } from './auth.types';
+import { User } from "./auth.types";
 
-export type EventStatus = 'draft' | 'published' | 'cancelled' | 'completed';
+export type EventStatus = "draft" | "published" | "cancelled" | "completed";
 export type EventCategory =
-  | 'music'
-  | 'tech'
-  | 'sports'
-  | 'arts'
-  | 'food'
-  | 'business'
-  | 'other';
+  | "music"
+  | "tech"
+  | "sports"
+  | "arts"
+  | "food"
+  | "business"
+  | "other";
 
 export interface Event {
   _id: string;
@@ -23,13 +21,13 @@ export interface Event {
   venue: string;
   city: string;
   bannerImage: string;
-  price: number;          // in paise (INR)
+  price: number;
   totalCapacity: number;
   bookedCount: number;
-  availableSeats: number; // virtual field from backend
+  availableSeats: number;
   category: EventCategory;
   status: EventStatus;
-  organizer: Pick<User, '_id' | 'name' | 'email' | 'avatar'>;
+  organizer: Pick<User, "_id" | "name" | "email" | "avatar">;
   tags: string[];
   isFeatured: boolean;
   createdAt: string;
@@ -51,7 +49,11 @@ export interface PaginatedEvents {
   pages: number;
 }
 
-export type TicketStatus = 'pending' | 'confirmed' | 'cancelled' | 'checked_in';
+export type TicketStatus =
+  | "pending"
+  | "confirmed"
+  | "cancelled"
+  | "checked_in";
 
 export interface Ticket {
   _id: string;
