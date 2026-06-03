@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "NestJS backend for Event Management System",
   "scripts": {
-    "build": "npx nest build",
+    "build": "tsc -p tsconfig.build.json",
     "start": "npx nest start",
     "start:dev": "npx nest start --watch",
     "start:prod": "node dist/main"
@@ -41,6 +41,6 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/qrcode": "^1.5.5",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.0"
+    "typescript": "^5.9.3"
   }
 }
