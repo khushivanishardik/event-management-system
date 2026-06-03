@@ -44,12 +44,19 @@ export class TicketsService {
     const totalAmount = (event as any).price * quantity;
 
     const ticket = await this.ticketModel.create({
-      user: userId,
-      event: eventId,
-      quantity,
-      totalAmount,
-      status: TicketStatus.PENDING,
-    });
+  user: userId,
+  event: eventId,
+  quantity,
+  totalAmount,
+  status: TicketStatus.CONFIRMED,
+});
+
+await this.eventsService.incrementBooked(
+  eventId,
+  quantity,
+);
+
+    
 
     return ticket;
   }

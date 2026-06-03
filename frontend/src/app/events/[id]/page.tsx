@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { useEventStore } from "@/store/event.store";
 import { useAuth } from "@/hooks/useAuth";
 import { ticketsService } from "@/services/tickets.service";
-import { paymentsService } from "@/services/payments.service";
 import {
   formatEventDate,
   formatEventTime,
@@ -38,40 +37,44 @@ export default function EventDetailPage() {
     if (id) fetchEventById(id);
   }, [id]); // eslint-disable-line
 
+
+
   const handleBook = async () => {
-    if (!isAuthenticated) {
-      toast.error("Please log in to book tickets");
-      router.push("/login");
-      return;
-    }
-    setIsBooking(true);
-    try {
-      const ticket = await ticketsService.book(event!._id, quantity);
-      const order = await paymentsService.createOrder(ticket._id);
-      const result = await paymentsService.initiatePayment(order, {
-        name: user!.name,
-        email: user!.email,
-        phone: user!.phone,
-      });
-      await paymentsService.verifyPayment({
-        razorpayOrderId: result.razorpay_order_id,
-        razorpayPaymentId: result.razorpay_payment_id,
-        razorpaySignature: result.razorpay_signature,
-        ticketId: ticket._id,
-        eventName: event!.title,
-      });
-      toast.success("🎉 Ticket confirmed! QR code sent to your email.");
-      setIsBooked(true);
-    } catch (err: any) {
-      if (err.message === "Payment cancelled") {
-        toast.error("Payment cancelled");
-      } else {
-        toast.error(err.response?.data?.message || "Booking failed");
-      }
-    } finally {
-      setIsBooking(false);
-    }
-  };
+  if (!isAuthenticated) {
+    toast.error("Please log in to book tickets");
+    router.push("/login");
+    return;
+  }
+
+  setIsBooking(true);
+
+  try {
+    const ticket = await ticketsService.book(
+      event!._id,
+      quantity
+    );
+
+    console.log("TICKET =", ticket);
+
+    toast.success("🎉 Ticket booked successfully!");
+
+    setIsBooked(true);
+
+  } catch (err: any) {
+
+    console.error(err);
+
+    toast.error(
+      err.response?.data?.message ||
+      "Booking failed"
+    );
+
+  } finally {
+    setIsBooking(false);
+  }
+};
+
+ 
 
   if (isLoading) {
     return (
