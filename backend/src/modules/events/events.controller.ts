@@ -41,11 +41,19 @@ export class EventsController {
 
   /** Organizer: Get own events (must be before :id to avoid conflict) */
   @Get('my-events')
-  @UseGuards(JwtAuthGuard)
-  async myEvents(@Request() req) {
-    const events = await this.eventsService.myEvents(req.user._id);
-    return successResponse(events, 'Your events fetched');
-  }
+@UseGuards(JwtAuthGuard)
+async myEvents(@Request() req) {
+
+  const events =
+    await this.eventsService.myEvents(
+      req.user._id,
+    );
+
+  return successResponse(
+    events,
+    'Your events fetched',
+  );
+}
 
   /** Public: Single event */
   @Get(':id')
@@ -55,13 +63,28 @@ export class EventsController {
   }
 
   /** Organizer/Admin: Create event */
-  @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ORGANIZER, Role.ADMIN)
-  async create(@Body() dto: CreateEventDto, @Request() req) {
-    const event = await this.eventsService.create(dto, req.user._id);
-    return successResponse(event, 'Event created successfully');
-  }
+  //temprory
+  
+@Post()
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.ORGANIZER, Role.ADMIN)
+async create(
+  @Body() dto: CreateEventDto,
+  @Request() req,
+) {
+
+  console.log("EVENT CREATOR =", req.user);
+
+  const event = await this.eventsService.create(
+    dto,
+    req.user._id,
+  );
+
+  return successResponse(
+    event,
+    'Event created successfully',
+  );
+}
 
   /** Organizer/Admin: Update event */
   @Patch(':id')

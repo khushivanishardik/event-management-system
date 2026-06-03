@@ -1,14 +1,29 @@
-// Location: backend/src/modules/auth/guards/jwt-auth.guard.ts
-// Purpose: Route guard that triggers the JWT Passport strategy. Apply to any
-//          controller method or class that requires an authenticated user.
-//
-// Usage:
-//   @UseGuards(JwtAuthGuard)
-//   @Get('profile')
-//   getProfile(@Request() req) { return req.user; }
+import {
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 
-import { Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {}
+export class JwtAuthGuard extends AuthGuard('jwt') {
+
+  handleRequest(err, user, info) {
+
+    console.log('====================');
+    console.log('JWT USER =', user);
+    console.log('JWT ERR =', err);
+    console.log('JWT INFO =', info);
+    console.log('====================');
+
+    if (info) {
+      console.log('INFO MESSAGE:', info.message);
+    }
+
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    }
+
+    return user;
+  }
+}

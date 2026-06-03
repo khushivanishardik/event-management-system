@@ -25,16 +25,22 @@ import { successResponse } from '../../common/utils/response';
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
-  @Post()
-  async createTicket(@Body() body: any, @Request() req) {
-    const { eventId, quantity = 1 } = body;
-    const ticket = await this.ticketsService.createTicket(
-      req.user._id,
-      eventId,
-      quantity,
-    );
-    return successResponse(ticket, 'Ticket reserved — complete payment to confirm');
-  }
+@Post()
+async createTicket(@Body() body: any, @Request() req) {
+
+  console.log("REQ.USER =", req.user);
+  console.log("BODY =", body);
+
+  const { eventId, quantity = 1 } = body;
+
+  const ticket = await this.ticketsService.createTicket(
+    req.user._id,
+    eventId,
+    quantity,
+  );
+
+  return successResponse(ticket, "Ticket created");
+}
 
   @Get('my-tickets')
   async myTickets(@Request() req) {

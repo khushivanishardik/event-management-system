@@ -26,12 +26,14 @@ export class EventsService {
 
   /** Create a new event (organizer only) */
   async create(dto: CreateEventDto, organizerId: string) {
-    const event = await this.eventModel.create({
-      ...dto,
-      organizer: organizerId,
-    });
-    return event;
-  }
+  const event = await this.eventModel.create({
+    ...dto,
+    organizer: organizerId,
+    status: EventStatus.PUBLISHED,
+  });
+
+  return event;
+}
 
   /** Public: list events with filtering and pagination */
   async findAll(query: {

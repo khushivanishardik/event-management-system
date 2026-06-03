@@ -38,8 +38,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
   login: async (payload) => {
     set({ isLoading: true });
     try {
-      const res = await authService.login(payload);
-      const { user, token } = res.data;
+     const res = await authService.login(payload);
+     const { user, token } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       set({ user, token, isLoading: false });

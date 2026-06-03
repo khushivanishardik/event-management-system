@@ -25,6 +25,10 @@ export default function OrganizerPage() {
   useRequireAuth();
   const { user, isOrganizer } = useAuth();
 
+console.log("USER =", user);
+console.log("ROLE =", user?.role);
+console.log("IS ORGANIZER =", isOrganizer);
+
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
@@ -66,22 +70,22 @@ export default function OrganizerPage() {
     }
   };
 
-  if (!isOrganizer) {
-    return (
-      <div className="text-center py-24">
-        <div className="text-5xl mb-4">🔒</div>
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">
-          Organizer Access Required
-        </h2>
-        <p className="text-gray-500 mb-6">
-          Please sign up as an organizer to access this page.
-        </p>
-        <Link href="/signup?role=organizer">
-          <Button>Become an Organizer</Button>
-        </Link>
-      </div>
-    );
-  }
+//if (!isOrganizer) {
+ // return (
+ //   <div className="text-center py-24">
+   //   <div className="text-5xl mb-4">🔒</div>
+   //   <h2 className="text-xl font-semibold text-gray-800 mb-2">
+   //     Organizer Access Required
+    //  </h2>
+    //  <p className="text-gray-500 mb-6">
+   ////     Please sign up as an organizer to access this page.
+   //   </p>
+  //    <Link href="/signup?role=organizer">
+   //     <Button>Become an Organizer</Button>
+   //   </Link>
+ //  </div>
+ // );
+//}
 
   const totalRevenue = events.reduce((s, e) => s + e.bookedCount * e.price, 0);
 

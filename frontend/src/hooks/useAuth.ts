@@ -63,10 +63,15 @@ export function useRequireAuth(
 ) {
   const router = useRouter();
 
-  const {
-    token,
-    isLoading,
-  } = useAuthStore();
+const {
+  token,
+  isLoading,
+  loadFromStorage,
+} = useAuthStore();
+
+useEffect(() => {
+  loadFromStorage();
+}, [loadFromStorage]);
 
   useEffect(() => {
     if (

@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || 'fallback_secret',
+      secretOrKey: 'supersecretjwtkey',
     });
   }
 
@@ -31,13 +31,25 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * Called after token signature is verified. Returns the user object
    * or throws UnauthorizedException if user is not found / inactive.
    */
+
   async validate(payload: JwtPayload) {
-    const user = await this.userModel.findById(payload.sub).lean();
+  console.log("================================");
+  console.log("JWT PAYLOAD =", payload);
 
-    if (!user || !user.isActive) {
-      throw new UnauthorizedException('User not found or account deactivated');
-    }
+  const user = await this.userModel.findById(payload.sub).lean();
 
-    return user; // Attached as req.user
+  console.log("FOUND USER =", user);
+  console.log("================================");
+
+  if (!user || !user.isActive) {
+    throw new UnauthorizedException(
+      'User not found or account deactivated',
+    );
   }
+
+  return user;
+}
+
+
+
 }
