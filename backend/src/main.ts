@@ -10,7 +10,7 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://event-management-system-ecru-seven.vercel.app'],
   credentials: true,
 });
 
